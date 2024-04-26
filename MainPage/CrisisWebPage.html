@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Website Test</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0px;
+		}
+
+		header {
+			background-color: rgb(52, 210, 235);
+			font-size: 250%;
+			padding: 20px;
+			padding-left: 50px;
+		}
+
+		section {
+			padding: 10px;
+		}
+
+		table {
+			background-color: black;
+			border: 1px solid;
+			width: 100%;
+		}
+
+		td, th {
+			border: 1px solid;
+			background-color: white;
+			font-size: 300%;
+			text-align: left;
+			padding: 8px;
+		}
+
+		#formSection {
+			padding-left: 40px;
+		}
+
+		input, label {
+			font-size: 200%;
+		}
+
+		#CountryInputBox {
+			width: 500px;
+		}
+	</style>
+
+</head>
+
+<body>
+    <header>
+	<h2>Crisis Aid</h2>
+    </header>
+
+    <section>
+        <table id="crisisTable">
+            <tr>
+                <th>Time</th>
+                <th>Date</th>
+                <th>Country</th>
+            </tr>
+        </table>
+    </section>
+    
+    <section id="formSection">
+        <form name="addCrisis" action="" method="GET">
+            <label>Add New Crisis:</label><br>
+            <input type="text" name="CountryInput" value="" id="CountryInputBox" placeholder="Country...">
+            <input type="button" value="Submit" onClick="newCrisis(this.form)">
+        </form>
+    </section>
+
+	
+	
+<script>
+
+
+function newCrisis(CrisisForm) {
+	
+	var country = CrisisForm.CountryInput.value;
+	CrisisForm.CountryInput.value = "";
+	var table = document.getElementById("crisisTable");
+	var row = table.insertRow();
+
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+	const time = new Date();
+
+	cell1.innerHTML = time.getHours().toString().concat(":", time.getMinutes(), ":", time.getSeconds());
+	cell2.innerHTML = time.getDate().toString().concat("/", time.getMonth() + 1, "/", time.getFullYear());
+	cell3.innerHTML = country;
+}
+
+</script>
+
+</body>
+</html>
