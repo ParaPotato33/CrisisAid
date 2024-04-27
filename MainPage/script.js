@@ -1,7 +1,6 @@
 async function pageLoad() {
-    var savedData = fetch('tableData.json')
-        .then( response => response.json() )
-    alert(savedData.toString());
+    var savedData = JSON.parse(fetch('tableData.json'))
+    alert(savedData);
 }
 
 function newCrisis(CrisisForm) {
