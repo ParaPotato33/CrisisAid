@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+}
+
+header {
+    background-color: rgb(52, 210, 235);
+    font-size: 250%;
+    padding: 20px;
+    padding-left: 50px;
+}
+
+section {
+    padding: 10px;
+}
+
+table {
+    background-color: black;
+    border: 1px solid;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid;
+    background-color: white;
+    font-size: 300%;
+    text-align: left;
+    padding: 8px;
+}
+
+#formSection {
+    padding-left: 40px;
+}
+
+input, label {
+    font-size: 200%;
+}
+
+#CountryInputBox {
+    width: 500px;
+}
