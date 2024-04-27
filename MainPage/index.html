@@ -20,13 +20,16 @@
             </tr>
         </table>
     </section>
-    
+
     <section id="formSection">
-        <form name="addCrisis" action="" method="GET">
-            <label>Add New Crisis:</label><br>
+       
+        <form name="addCrisis" action="" method="GET" id="addCrisisForm">
+            <label for="CountryInputBox">Add New Crisis:</label><br>
             <input type="text" name="CountryInput" value="" id="CountryInputBox" placeholder="Country...">
             <input type="button" value="Submit" onClick="newCrisis(this.form)">
         </form>
     </section>
+
+    <input type="button" value="test" onclick="pageLoad()">
 </body>
 </html>

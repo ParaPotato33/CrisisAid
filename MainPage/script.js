@@ -1,5 +1,10 @@
+async function pageLoad() {
+    fetch('tableData.json')
+        .then( response => response.json() )
+        .then( data => console.log(data) )
+}
+
 function newCrisis(CrisisForm) {
-	
 	var country = CrisisForm.CountryInput.value;
 	CrisisForm.CountryInput.value = "";
 	var table = document.getElementById("crisisTable");
