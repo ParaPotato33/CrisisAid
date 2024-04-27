@@ -2,7 +2,7 @@ async function pageLoad() {
     const response = await fetch("tableData.json");
     const savedData = await response.json();
 
-    alert(savedData);
+    alert(JSON.stringify(savedData));
 }
 
 function newCrisis(CrisisForm) {
