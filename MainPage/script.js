@@ -1,7 +1,7 @@
 async function pageLoad() {
     fetch('tableData.json')
         .then( response => response.json() )
-        .then( data => console.log(data) )
+    alert(response);
 }
 
 function newCrisis(CrisisForm) {
