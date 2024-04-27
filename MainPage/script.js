@@ -1,5 +1,7 @@
 async function pageLoad() {
-    var savedData = JSON.parse(fetch('tableData.json'))
+    const response = await fetch("tableData.json");
+    const savedData = await response.json();
+
     alert(savedData);
 }
 
