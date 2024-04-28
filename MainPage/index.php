@@ -31,6 +31,16 @@
         </form>
     </section>
 
+    <section>
+        <h2>hello</h2>
+        <?php
+            $jsonText = file_get_contents("tableData.json")
+            ?>
+            <p>$jsonText</p>
+            <?php
+        ?>
+    </section>
+
     <input type="button" value="test" onclick="pageLoad()">
 </body>
 </html>
