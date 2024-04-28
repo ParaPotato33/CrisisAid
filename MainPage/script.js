@@ -1,8 +1,16 @@
 async function pageLoad() {
     const response = await fetch("tableData.json");
-    const savedData = await response.json();
+    var savedData = await response.json();
+	var table = document.getElementById("crisisTable");
 
-    alert(JSON.stringify(savedData));
+	for (var i = 0; i < savedData.crisis.length; i++) {
+		var crisis = savedData.crisis[i];
+		var row = table.insertRow();
+		for (var j = 0; j < Object.entries(crisis).length; j++) {
+			var cell = row.insertCell();
+			cell.innerHTML = JSON.stringify(Object.entries(crisis)[j][1]).replace(/"+/g, "");
+		}
+	}
 }
 
 function newCrisis(CrisisForm) {
