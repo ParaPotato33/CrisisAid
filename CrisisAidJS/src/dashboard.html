@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Website Test</title>
+    <link rel="icon" href="Assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+    <script src="src/script.js"></script>
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+</head>
+
+<body>
+    <header>
+        <img href="index.html" src="Assets/CRISISAID.png" alt="logo" id="logo">
+	    <h1>Crisis Aid</h1>
+    </header>
+
+    <ul>
+        <li><a class="active" href="dashboard.html">Home</a></li>
+        <li style="float:right"><a href="/">Logout</a></li>
+    </ul>
+
+    <section>
+        <table id="crisisTable">
+            <tr>
+                <th>Time</th>
+                <th>Date</th>
+                <th>City</th>
+                <th>Country</th>
+                <th width="1px">Complete</th>
+            </tr>
+        </table>
+    </section>
+
+    <section id="formSection">
+       
+        <form name="addCrisis" action="" method="GET" id="addCrisisForm">
+            <label for="CountryInputBox">Add New Crisis:</label><br>
+            <input type="text" name="CityInput" value="" id="CityInputBox" placeholder="City...">
+            <input type="text" name="CountryInput" value="" id="CountryInputBox" placeholder="Country...">
+            <input id="newSubmitButton" type="button" value="Submit">
+        </form>
+    </section>
+</body>
+
+</html>

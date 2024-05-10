@@ -1,0 +1,21 @@
+{
+  "name": "elastic-beanstalk-sample-app",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "app.js",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "aws-sdk": "^2.1613.0",
+    "cors": "^2.8.5",
+    "document": "^0.4.7",
+    "export": "^0.1.337",
+    "express": "^4.19.2",
+    "onload": "^0.1.0",
+    "window": "^4.2.7"
+  }
+}
