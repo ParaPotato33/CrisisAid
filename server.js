@@ -51,6 +51,13 @@ var server = http.createServer(function (req, res) {
                     }
                 });
             }
+            if (req.url === '/crisisDetails.json') {
+                fs.writeFile('crisisDetails.json', body, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+            }
             res.writeHead(200, 'OK', {'Content-Type': 'text/plain'});
             res.end();
         });
@@ -67,8 +74,31 @@ var server = http.createServer(function (req, res) {
             }
         });
     }
+    
     else if (req.url === '/dashboard.html') {
         fs.readFile('src/dashboard.html', (err, data) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Internal server error');
+            } else {
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end(data);
+            }
+        });
+    }
+    else if (req.url.slice(0, 19) === '/crisisDetails.html') {
+        fs.readFile('src/crisisDetails.html', (err, data) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Internal server error');
+            } else {
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end(data);
+            }
+        });
+    }
+    else if (req.url.slice(0, 19) === '/completeMap.html') {
+        fs.readFile('src/completeMap.html', (err, data) => {
             if (err) {
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
                 res.end('Internal server error');
@@ -149,6 +179,28 @@ var server = http.createServer(function (req, res) {
             }
         });
     }
+    else if (req.url === '/src/details.js') {
+        fs.readFile('src/details.js', (err, data) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Internal Server Error');
+            } else {
+                res.writeHead(200, { 'Content-Type': 'application/javascript' });
+                res.end(data);
+            }
+        });
+    }
+    else if (req.url === '/src/map.js') {
+        fs.readFile('src/map.js', (err, data) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Internal Server Error');
+            } else {
+                res.writeHead(200, { 'Content-Type': 'application/javascript' });
+                res.end(data);
+            }
+        });
+    }
     else if (req.url === '/tableData.json') {
         fs.readFile('tableData.json', (err, data) => {
             if (err) {
@@ -160,9 +212,22 @@ var server = http.createServer(function (req, res) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(data);
             }
-        });
-        
-    } else {
+        });    
+    }
+    else if (req.url === '/crisisDetails.json') {
+        fs.readFile('crisisDetails.json', (err, data) => {
+            if (err) {
+                console.log(JSON.parse(err));
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Internal Server Error');
+            } else {
+                
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(data);
+            }
+        });    
+    }
+    else {
         console.log(req.url + ' not found');
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         res.end('Not found');

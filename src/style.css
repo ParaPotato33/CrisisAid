@@ -27,13 +27,6 @@ header h1 {
     margin: 5px;
 }
 
-header a.login {
-    position: relative;
-    top: 0px;
-    left: 10px;
-    margin: 5px;
-}
-
 ul {
     list-style-type: none;
     margin: 0;
@@ -61,6 +54,11 @@ a {
 .active {
     background-color: rgb(52, 210, 235);
     border: 3px solid black;
+}
+
+.selected {
+    border: 5px solid black;
+    
 }
 
 section {
@@ -110,9 +108,53 @@ input, label {
     width: 500px;
 }
 
-#completeButton {
+#detailsButton {
     display: block;
     width: 100%;
     padding: 5px;
     font-size: 80%;
 }
+
+#crisisName {
+    font-weight: bold;
+    font-size: 300%;
+}
+
+.mapContainer {
+    scale: 2;
+    position: relative;
+    float: right;
+    right: 70px;
+    height: 100px;
+    width: 100px;
+    overflow: hidden;
+    
+}
+
+.crisisMap {
+    position: relative;
+    top: 0px;
+    left: 0px;
+}
+
+.completeMap {
+    position: relative;
+    top: 0px;
+    left: 0px;
+}
+
+.map {
+    width: 100%;
+    position: relative;
+    top: 0px;
+    left: 0px;
+}
+
+.marker {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+

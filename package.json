@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@syncfusion/ej2-maps": "^25.2.3",
     "aws-sdk": "^2.1613.0",
     "cors": "^2.8.5",
     "document": "^0.4.7",

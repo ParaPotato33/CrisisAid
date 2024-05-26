@@ -17,31 +17,27 @@ async function newCrisis() {
         headers: {"Content-type": "application/json; charset=UTF-8"}
     }).then(response => response.json())
     .then(region => region.region);
-
+	//get the current position
 	navigator.geolocation.getCurrentPosition(success);
 }
-
+//function if position is found
 async function success(pos) {
-	console.log(pos);
+	//get the current coordinates
 	var crd = pos.coords;
-	console.log('Your current position is:');
-	console.log(`Latitude : ${crd.latitude}`);
-	console.log(`Longitude: ${crd.longitude}`);
-	console.log(`More or less ${crd.accuracy} meters.`);
-
+	//fetch and store table data
 	var response = await fetch("tableData.json")
 	var savedData = await response.json();
+	//get the current time
     const time = new Date();
-    
+    //get the country of the user
     var url = 'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude='.concat(crd.latitude, '&longitude=', crd.longitude, '&localityLanguage=en');
 	var response = await fetch(url);
 	var crisisCountry = await response.json();
-	
+	//format the time and date
 	var crisisTime = time.getHours().toString().concat(":", formatDate(time.getMinutes()), ":", formatDate(time.getSeconds()));
     var crisisDate = time.getDate().toString().concat("/", formatDate((time.getMonth() + 1)), "/", time.getFullYear());
-
-	var crisisData = {Time: crisisTime, Date: crisisDate, City: crisisCountry.city, Country: crisisCountry.countryCode};
-	console.log(crisisData);
+	//create the crisis data
+	var crisisData = {Time: crisisTime, Date: crisisDate, City: crisisCountry.city, Country: crisisCountry.countryCode, Percentage: "0%", Requests: 1, Latitude: crd.latitude, Longitude: crd.longitude};
     savedData.crisis.push(crisisData);
 
     //stringify data back to json format
@@ -52,7 +48,7 @@ async function success(pos) {
 		headers: {"Content-type": "application/json; charset=UTF-8"}
 	})
 }
-
+//function to add a new crisis to the table
 document.addEventListener("DOMContentLoaded", () => {
 	const button = document.getElementById("emergencyButton");
 	if (button) {

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Website Test</title>
+    <link rel="icon" href="Assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+    <script src="src/details.js"></script>
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+</head>
+
+<body class="flex-container">
+    <header>
+        <img href="index.html" src="Assets/CRISISAID.png" alt="logo" id="logo">
+	    <h1>Crisis Aid</h1>
+    </header>
+
+    <ul id="NavBar">
+        <li><a href="dashboard.html">Home</a></li>
+        <li><a href="completeMap.html">Map</a></li>
+        <li style="float:right"><a href="/">Logout</a></li>
+    </ul>
+
+    <section id="crisisName">
+    </section>
+
+    <div class="mapContainer">
+        <img class="crisisMap" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Equirectangular_projection_SW.jpg/1200px-Equirectangular_projection_SW.jpg"/>
+    </div>
+
+    <section style="padding-left: 2%;">
+        <h2 style="margin: 0px; font-size: 200%;">Request History</h2>
+    </section>
+
+    <section style="width: 85%;">
+        <table id="RequestHistory">
+            <tr>
+                <th>Time</th>
+                <th>Date</th>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <form name="extraDetails" id="extraDetailsForm">
+        </form>
+    </section>
+
+    <section style="position: relative; left: 600px; bottom: 450px;">
+        <form style="font-size: 120%;">
+            <label>Commited Resources:</label><br>
+            <label id="commitedResources"></label><br>
+            <input type="text" name="resourceInput" value="" id="resourceInputBox" placeholder="Add Resources...">
+            <input id="newSubmitButton" type="button" value="Submit">
+        </form>
+    </section>
+</body>
+
+</html>

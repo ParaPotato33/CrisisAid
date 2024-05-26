@@ -2,6 +2,7 @@
 //Loads saved table data
 window.onload = async function() {
 	pageLoad();
+	updateSize();
 };
 pageLoad = async function() {
 	//fetch and store table data
@@ -10,40 +11,54 @@ pageLoad = async function() {
 	//get html table
 	var table = document.getElementById("crisisTable");
 
+	var names = new Array();
+
 	//loop throught json file and add values to html table
 	for (var i = 0; i < savedData.crisis.length; i++) {
-		//get the crisis data
-		var crisis = savedData.crisis[i];
-		//add a new row to the table
-		var row = table.insertRow();
-		//loop through the individual crisis entries
-		for (var j = 0; j < Object.entries(crisis).length; j++) {
-			//add a new cell to the row
-			var cell = row.insertCell();
-			//add data to the cell while formating it correctly
-			cell.innerHTML = JSON.stringify(Object.entries(crisis)[j][1]).replace(/"+/g, "");
+		var repeats = false;
+		for (var k = 0; k < names.length; k++) {
+			if (names[k] == savedData.crisis[i].City) {
+				table.rows[k + 1].cells[4].innerHTML = parseInt(table.rows[k + 1].cells[4].innerHTML) + 1;
+				repeats = true;
+			}
 		}
-		var cell = row.insertCell();
-		addCompleteButton(cell);
+		
+		if (repeats == false) {
+			//get the crisis data
+			var crisis = savedData.crisis[i];
+			//add a new row to the table
+			var row = table.insertRow();
+			//loop through the individual crisis entries
+			for (var j = 1; j < Object.entries(crisis).length - 3; j++) {
+				//add a new cell to the row
+				var cell = row.insertCell();
+				//add data to the cell while formating it correctly
+				cell.innerHTML = JSON.stringify(Object.entries(crisis)[j][1]).replace(/"+/g, "");
+			}
+			var cell = row.insertCell();
+			cell.innerHTML = 1;
+			var cell = row.insertCell();
+			addDetailsButton(cell, i);
+			names.push(savedData.crisis[i].City);
+		}
 	}
 }
 
-function addCompleteButton(cell) {
+function addDetailsButton(cell, i) {
 	var completeButton = document.createElement("button");
-		completeButton.innerHTML = "Complete";
-		completeButton.id = "completeButton";
+		completeButton.innerHTML = "Details";
+		completeButton.id = "detailsButton";
 		completeButton.onclick = async function() {
+			location.href = "/crisisDetails.html?row="	+ i;
 			//delete row
 			console.log(this.parentNode.parentNode.rowIndex);
-			await saveTable(this.parentNode.parentNode.rowIndex, "remove");
-			this.parentNode.parentNode.remove();
 		}
 		cell.appendChild(completeButton);
 }
 
 
 //save new data to json file
-async function saveTable(rowNum, action) {
+async function saveTable(newTime, rowNum, action) {
 	
 	//fetch and store table data
 	const response = await fetch("tableData.json")
@@ -53,7 +68,7 @@ async function saveTable(rowNum, action) {
 	
 	//create base for new crisis
 	if (action == "add") {
-		var newCrisisData = "{";
+		var newCrisisData = "{\"Time\":\"" + newTime + "\",";
 		//loop through new crisis and record data
 		for (var i = 0; i < table.rows[rowNum].cells.length - 1; i++) {
 			//get name of collumn
@@ -63,6 +78,10 @@ async function saveTable(rowNum, action) {
 			//add to base new crisis
 			newCrisisData = newCrisisData.concat(JSON.stringify(collName), ":", JSON.stringify(data), ",");
 		}
+		var url = "https://nominatim.openstreetmap.org/search?q=" +  table.rows[rowNum].cells[2].innerHTML + "&format=json";
+		var data = await fetch(url)
+		.then(response => response.json())
+		newCrisisData = newCrisisData.concat(JSON.stringify("Latitude"), ":", JSON.stringify(data[0].lat), ",", JSON.stringify("Longitude"), ":", JSON.stringify(data[0].lon), ",");
 		//further format data
 		newCrisisData = newCrisisData.slice(0, newCrisisData.length - 1) + "}";
 		//parse saved data into an object then push to json data
@@ -72,7 +91,6 @@ async function saveTable(rowNum, action) {
 	else if (action == "remove") {
 		savedData.crisis.splice(rowNum - 1, 1);
 	}
-	console.log(savedData);
 	//stringify data back to json format
 	const jsonString = JSON.stringify(savedData);
 	await fetch("./tableData.json", {
@@ -105,28 +123,53 @@ async function newCrisis(CrisisForm) {
 	var row = table.insertRow();
 
 	//add new cells to the rows
+	//var cell1 = row.insertCell(0);
 	var cell1 = row.insertCell(0);
 	var cell2 = row.insertCell(1);
 	var cell3 = row.insertCell(2);
 	var cell4 = row.insertCell(3);
 	var cell5 = row.insertCell(4);
+	var cell6 = row.insertCell(5);
 
 	//create date object
 	const time = new Date();
 
 	//fill first cell with time
-	cell1.innerHTML = time.getHours().toString().concat(":", formatDate(time.getMinutes()), ":", formatDate(time.getSeconds()));
+	newTime = time.getHours().toString().concat(":", formatDate(time.getMinutes()), ":", formatDate(time.getSeconds()));
 	//fill second cell with date
-	cell2.innerHTML = time.getDate().toString().concat("/", formatDate((time.getMonth() + 1)), "/", time.getFullYear());
+	cell1.innerHTML = time.getDate().toString().concat("/", formatDate((time.getMonth() + 1)), "/", time.getFullYear());
 	//fill third cell with entered city
-	cell3.innerHTML = city;
+	cell2.innerHTML = city;
 	//fill third cell with entered country
-	cell4.innerHTML = country;
+	cell3.innerHTML = country;
+	//add percentage
+	var data = await fetch("crisisDetails.json")
+	.then(response => response.json())
+	for (var i = 0; i < data.details.length; i++) {
+		if (data.details[i].City == city) {
+			var percentage = data.details[i].CommitedResources;
+		}
+	}
+	cell4.innerHTML = percentage + "%";
+	//add requests
+	cell5.innerHTML = 1;
 	//add delete button to last cell
-	addCompleteButton(cell5);
+	addDetailsButton(cell6);
 	//call function to save the new data to json file
-	await saveTable(table.rows.length - 1, "add");
+	await saveTable(newTime, table.rows.length - 1, "add");
+	window.location.reload();
 }
+
+function updateSize() {
+    var scale = (window.innerWidth/1920) * 2;
+    var right = (35 * scale) + "px";
+    var zoom = (window.innerWidth/1920);
+    var header = Math.pow(zoom, -0.5);
+    document.getElementsByTagName("body")[0].style.zoom = zoom;
+    document.getElementById("NavBar").style.zoom = header;
+}
+
+window.addEventListener('resize', updateSize);
 
 document.addEventListener("DOMContentLoaded", () => {
 	const button = document.getElementById("newSubmitButton");
